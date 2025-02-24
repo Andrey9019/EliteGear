@@ -1,38 +1,92 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import react from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
+import eslintPluginJs from "@eslint/js";
+import eslintPluginReact from "eslint-plugin-react";
+import eslintPluginReactHooks from "eslint-plugin-react-hooks";
+import globals from "globals";
+import eslintTypescript from "typescript-eslint";
 
-export default [
-  { ignores: ['dist'] },
+export default eslintTypescript.config(
+  { ignores: ["**/vite-env.d.ts"] },
   {
-    files: ['**/*.{js,jsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
+      globals: { ...globals.browser },
+      parser: eslintTypescript.parser,
     },
-    settings: { react: { version: '18.3' } },
-    plugins: {
-      react,
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-    },
+  },
+  eslintPluginJs.configs.recommended,
+  eslintTypescript.configs.recommended,
+  eslintPluginReact.configs.flat.recommended,
+  {
     rules: {
-      ...js.configs.recommended.rules,
-      ...react.configs.recommended.rules,
-      ...react.configs['jsx-runtime'].rules,
-      ...reactHooks.configs.recommended.rules,
-      'react/jsx-no-target-blank': 'off',
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            "ImportDeclaration[source.value='react'] :matches(ImportDefaultSpecifier, ImportNamespaceSpecifier)",
+          message: "Default React import is not allowed",
+        },
+        {
+          selector: 'Identifier[name="React"]',
+          message: "Prefix React is not allowed",
+        },
+      ],
+      "newline-before-return": "error",
+      "arrow-body-style": ["warn", "as-needed"],
+    },
+  },
+  {
+    rules: {
+      "@typescript-eslint/no-import-type-side-effects": "error",
+      "@typescript-eslint/array-type": ["error", { default: "array" }],
+      "@typescript-eslint/naming-convention": [
+        "error",
+        { selector: "typeLike", format: ["PascalCase"] },
+      ],
+      "@typescript-eslint/no-restricted-types": [
+        "error",
+        {
+          types: {
+            FC: "Useless and has some drawbacks, see https://github.com/facebook/create-react-app/pull/8177",
+          },
+        },
       ],
     },
   },
-]
+  {
+    files: ["**/ambient/*.d.ts"],
+    rules: {
+      "@typescript-eslint/consistent-type-definitions": "off",
+    },
+  },
+  {
+    rules: {
+      "react/react-in-jsx-scope": "off",
+      "react/display-name": "off",
+      "react/jsx-no-useless-fragment": "error",
+      "react/boolean-prop-naming": [
+        "error",
+        { rule: "^is[A-Z]([A-Za-z0-9]?)+", validateNested: true },
+      ],
+      "react/destructuring-assignment": [
+        "warn",
+        "always",
+        { destructureInSignature: "always" },
+      ],
+      "react/function-component-definition": [
+        "error",
+        {
+          namedComponents: "arrow-function",
+          unnamedComponents: "arrow-function",
+        },
+      ],
+      "react/jsx-curly-brace-presence": [
+        "error",
+        { props: "never", children: "never" },
+      ],
+      "react/self-closing-comp": ["warn", { component: true, html: true }],
+    },
+  },
+  {
+    plugins: { "react-hooks": eslintPluginReactHooks },
+    rules: { ...eslintPluginReactHooks.configs.recommended.rules },
+  }
+);
