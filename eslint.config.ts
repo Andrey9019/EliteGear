@@ -1,11 +1,11 @@
 import eslintPluginJs from "@eslint/js";
 import eslintPluginReact from "eslint-plugin-react";
 import eslintPluginReactHooks from "eslint-plugin-react-hooks";
-import globals from "globals";
 import eslintTypescript from "typescript-eslint";
+import globals from "globals";
 
 export default eslintTypescript.config(
-  { ignores: ["**/vite-env.d.ts"] },
+  // { ignores: ["**/vite-env.d.ts"] },
   {
     languageOptions: {
       globals: { ...globals.browser },
@@ -30,13 +30,13 @@ export default eslintTypescript.config(
         },
       ],
       "newline-before-return": "error",
-      "arrow-body-style": ["warn", "as-needed"],
+      "arrow-body-style": ["warn", "as-needed"], //  якщо стрілкова функція повертає одне значення, то {} і return не потрібні
     },
   },
   {
     rules: {
       "@typescript-eslint/no-import-type-side-effects": "error",
-      "@typescript-eslint/array-type": ["error", { default: "array" }],
+      "@typescript-eslint/array-type": ["error", { default: "array" }], // змушує писати string[] замість Array<string>.
       "@typescript-eslint/naming-convention": [
         "error",
         { selector: "typeLike", format: ["PascalCase"] },
@@ -61,11 +61,11 @@ export default eslintTypescript.config(
     rules: {
       "react/react-in-jsx-scope": "off",
       "react/display-name": "off",
-      "react/jsx-no-useless-fragment": "error",
+      "react/jsx-no-useless-fragment": "error", // забороняє зайві <>...</> (фрагменти).
       "react/boolean-prop-naming": [
         "error",
         { rule: "^is[A-Z]([A-Za-z0-9]?)+", validateNested: true },
-      ],
+      ], // якщо пропс boolean, його імя має починатися з is
       "react/destructuring-assignment": [
         "warn",
         "always",
@@ -82,7 +82,7 @@ export default eslintTypescript.config(
         "error",
         { props: "never", children: "never" },
       ],
-      "react/self-closing-comp": ["warn", { component: true, html: true }],
+      "react/self-closing-comp": ["warn", { component: true, html: true }], // самозакривні теги там, де немає дітей
     },
   },
   {
