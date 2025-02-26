@@ -6,7 +6,7 @@ export default {
       secondary: "#FACC15",
     },
     fontFamily: {
-      sans: ["Inter", "sans-serif"],
+      sans: ["PT Serif", "serif"],
     },
     extend: {
       fontSize: {
