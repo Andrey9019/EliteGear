@@ -6,7 +6,7 @@ import { CiUser } from "react-icons/ci";
 
 const DesktopHeader = () => (
   <header className="w-[1440px] mx-auto">
-    <div className="flex justify-between bg-primary px-[100px] py-[10px] items-center text-[#FFF]">
+    <div className="flex justify-between bg-primary px-[100px] py-[10px] items-center text-white">
       <p className="">Лого</p>
 
       <nav>
@@ -44,7 +44,7 @@ const DesktopHeader = () => (
       </nav>
 
       <a href="tel:+0800123456" className="">
-        <div className="flex items-center text-primary bg-[#FFF]  py-[10px] px-5 rounded-[4px]">
+        <div className="flex items-center text-primary bg-white  py-[10px] px-5 rounded-[4px]">
           <BsTelephone className=" mr-[10px]" />
           <p>0 (800) 12 34 56</p>
         </div>
@@ -52,7 +52,7 @@ const DesktopHeader = () => (
     </div>
 
     <div className="flex justify-between px-[100px] py-4 items-center">
-      <button className="flex text-lg items-center bg-primary text-[#FFF] py-[10px] px-[46px] mr-14 rounded-md uppercase">
+      <button className="flex text-lg items-center bg-primary text-white py-[10px] px-[46px] mr-14 rounded-md uppercase">
         <BiCategory className="mr-5" />
         Каталог
       </button>

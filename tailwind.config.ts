@@ -4,6 +4,8 @@ export default {
     colors: {
       primary: "#6F8B32",
       secondary: "#FFAD63",
+      white: "#FFF",
+      black: "#000",
     },
     fontFamily: {
       sans: ["PT Serif", "serif"],
